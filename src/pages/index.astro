@@ -1,10 +1,36 @@
 ---
+import BlogCard from '../components/BlogCard.astro';
 import BaseLayout from '../layouts/BaseLayout.astro';
-import Greeting from '../components/Greeting';
-const pageTitle = 'ホームページ';
 ---
+<BaseLayout>
+    <!-- Profile Section -->
+    <section id="profile" class="profile">
+      <h2>Profile</h2>
+      <a href="/profile"><img src="/assets/profile.jpeg" alt="Profile" class="profile-image" /></a>
+    </section>
 
-<BaseLayout pageTitle={pageTitle}>
-	<h2>私の素晴らしいブログのサブタイトル</h2>
-	<Greeting client:load messages={["Hej", "Hallo", "Hola", "Habari"]} />
+    <!-- Blog Section -->
+    <section id="blog" class="blog">
+      <h2>Blog</h2>
+      <a href="/blog"><img src="/assets/blog.jpeg" alt="Blog" class="blog-image" /></a>
+    </section>
 </BaseLayout>
+
+<style>
+  .profile {
+    margin: 2rem;
+  }
+  .profile-image {
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+  }
+  .blog {
+    margin: 2rem;
+  }
+  .blog-image {
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+  }
+</style>

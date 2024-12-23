@@ -1,20 +1,60 @@
 ---
-import { getCollection } from "astro:content";
-import '../styles/global.css';
+// コンポーネントをインポート
 import BaseLayout from '../layouts/BaseLayout.astro';
-import BlogPost from '../components/BlogPost.astro';
+import BlogCard from '../components/BlogCard.astro';
 
-const allPosts = await getCollection("blog");
-const pageTitle = '私のAstro学習ブログ';
+// 仮データ
+const blogPosts = [
+  { date: '2024/12/12', title: 'メルカリのデザインシステムとFlutter', category: 'Client side', image: '/image1.png' },
+  { date: '2024/12/12', title: 'Slackの検索テクニック', category: 'Organization', image: '/image2.png' },
+  { date: '2024/12/11', title: 'Sever Driven UIの拡張', category: 'Client side', image: '/image3.png' },
+];
+
+const categories = [
+  { name: 'AI', count: 71 },
+  { name: 'Backend', count: 223 },
+  { name: 'Client side', count: 147 },
+];
+
+const currentPage = 1;
+const totalPages = 11;
 ---
+<BaseLayout>
+  <div class="container">
+    <!-- ブログカードセクション -->
+    <div class="blog-container">
+      {blogPosts.map(post => (
+        <BlogCard 
+          date={post.date}
+          title={post.title}
+          category={post.category}
+          image={post.image}
+        />
+      ))}
+      <div class="pagination">
+        <button>Previous</button>
+        {[...Array(totalPages).keys()].map(page => (
+          <button class={currentPage === page + 1 ? 'active' : ''}>
+            {page + 1}
+          </button>
+        ))}
+        <button>Next</button>
+      </div>
+    </div>
 
-<BaseLayout pageTitle={pageTitle}>
-    <p>ここには、私がAstroを学んでいく旅の様子を投稿します。</p>
-    <ul>
-        {
-          allPosts.map((post) => (
-            <BlogPost url={`/posts/${post.id}/`} title={post.data.title} />
-          ))
-        }
-      </ul>
+    <!-- サイドバー -->
+    <aside class="sidebar">
+      <div class="search-bar">
+        <input type="text" placeholder="記事を検索" />
+      </div>
+      <div class="categories">
+        <h3>カテゴリー</h3>
+        <ul>
+          {categories.map(category => (
+            <li><a href="#">{category.name} ({category.count})</a></li>
+          ))}
+        </ul>
+      </div>
+    </aside>
+  </div>
 </BaseLayout>

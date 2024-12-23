@@ -1,19 +1,12 @@
----
-const platform = "github";
-const x = "X"
-const username = "yoshihito0930";
-import Social from './Social.astro';
----
+<footer class="footer">
+  <p>© 2024 Yoshihito Ishihara</p>
+</footer>
+
 <style>
-  footer {
-    display: flex;
-    gap: 1rem;
-    margin-top: 2rem;
+  .footer {
+    text-align: center;
+    padding: 1rem;
+    background-color: #333;
+    color: white;
   }
 </style>
-
-<footer>
-  <Social platform="X" username="harayoshii" />
-  <Social platform="github" username="yoshihito0930" />
-  <Social platform="youtube" username="astrodotbuild" />
-</footer>

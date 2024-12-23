@@ -1,0 +1,29 @@
+---
+import * as blogs from '../../content/blogs.json';
+import BlogCard from '../../components/BlogCard.astro';
+import { paginate } from 'astro:paginate';
+
+// ページ番号を取得
+export const prerender = true;
+const POSTS_PER_PAGE = 5;
+
+// ページネーションデータを生成
+const { data: paginatedBlogs, currentPage, totalPages } = paginate(blogs, { pageSize: POSTS_PER_PAGE });
+---
+<html lang="en">
+  <head>
+    <title>Blog - Page {currentPage}</title>
+  </head>
+  <body>
+    <main>
+      <h2>Blog - Page {currentPage}</h2>
+      {paginatedBlogs.map((post) => (
+        <BlogCard date={post.date} title={post.title} author={post.author} />
+      ))}
+      <nav>
+        {currentPage > 1 && <a href={`/blog/${currentPage - 1}`}>Previous</a>}
+        {currentPage < totalPages && <a href={`/blog/${currentPage + 1}`}>Next</a>}
+      </nav>
+    </main>
+  </body>
+</html>

@@ -1,0 +1,24 @@
+---
+// Props
+export interface BlogProps {
+  date: string;
+  title: string;
+}
+
+const { date, title } = Astro.props;
+---
+<article class="blog-card">
+  <p class="date">{date}</p>
+  <h3>{title}</h3>
+</article>
+
+<style>
+  .blog-card {
+    border-bottom: 1px solid #ddd;
+    padding: 1rem 0;
+  }
+  .date {
+    font-size: 0.9rem;
+    color: #999;
+  }
+</style>
