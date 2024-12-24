@@ -1,20 +1,25 @@
-// 1. `astro:content`からユーティリティをインポート
-import { z, defineCollection } from 'astro:content';
-// 2. コレクションを定義
-const blogCollection = defineCollection({
-    schema: z.object({
-      title: z.string(),
-      pubDate: z.date(),
-      description: z.string(),
-      image: z.object({
-        url: z.string(),
-        alt: z.string()
-      }),
-      tags: z.array(z.string())
-    })
+import { z, defineCollection } from "astro:content";
+
+const posts = defineCollection({
+  schema: z.object({
+    title: z.string(),
+    summary: z.string().optional(),
+    categories: z.array(z.string()),
+    tags: z.array(z.string()),
+    publishedAt: z.date(),
+    modifiedAt: z.date().nullable(),
+    draft: z.boolean(),
+  }),
 });
-// 3. コレクションを登録するために、単一の`collections`オブジェクトをエクスポート
-//    このキーは、"src/content"のコレクションのディレクトリ名と一致する必要があります。
+
+const tags = defineCollection({
+  type: "data",
+  schema: z.object({
+    id: z.string(),
+    name: z.string(),
+  }),
+});
 export const collections = {
-  'blogs': blogCollection,
+  posts: posts,
+  tags: tags,
 };

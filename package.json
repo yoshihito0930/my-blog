@@ -13,5 +13,8 @@
     "@astrojs/rss": "^4.0.10",
     "astro": "^5.0.5",
     "preact": "^10.25.1"
+  },
+  "devDependencies": {
+    "sass-embedded": "^1.83.0"
   }
 }
