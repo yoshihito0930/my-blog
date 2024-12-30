@@ -4,16 +4,10 @@ import { getCollection, getEntry } from 'astro:content';
 import BaseLayout from '../layouts/BaseLayout.astro';
 import BlogCard from '../components/BlogCard.astro';
 import { postsDefaultSortFunc } from "../content/utils";
+import Tag from "../components/Tag.astro"
 
-// 仮データ
-const allPosts = (await getCollection("posts")).sort(postsDefaultSortFunc);
-
-const categories = [
-  { name: 'AI', count: 71 },
-  { name: 'Backend', count: 223 },
-  { name: 'Client side', count: 147 },
-];
-
+const allPosts = await getCollection("posts");
+const tags = [...new Set(allPosts.map((post) => post.data.tags).flat())];
 const currentPage = 1;
 const totalPages = 5;
 ---
@@ -35,14 +29,11 @@ const totalPages = 5;
 
     <!-- サイドバー -->
     <aside class="sidebar">
-      <div class="search-bar">
-        <input type="text" placeholder="記事を検索" />
-      </div>
       <div class="categories">
-        <h3>カテゴリー</h3>
+        <h3>Tags</h3>
         <ul>
-          {categories.map(category => (
-            <li><a href="#">{category.name} ({category.count})</a></li>
+          {tags.map(tag => (
+            <Tag name={tag} href={`/tags/${tag}`} focused={false} />
           ))}
         </ul>
       </div>
