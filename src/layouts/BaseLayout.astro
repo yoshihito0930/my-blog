@@ -14,7 +14,16 @@ import "../styles/global.css";
   </head>
   <body>
     <Header />
-    <slot /> <!-- コンテンツ表示 -->
+    <div class="content">
+      <slot /> <!-- コンテンツ表示 -->
+    </div>
     <Footer />
   </body>
 </html>
+
+<style>
+  .content {
+    margin-left: 20%;
+    margin-right: 20%;
+  }
+</style>

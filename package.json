@@ -12,6 +12,7 @@
     "@astrojs/preact": "^4.0.0",
     "@astrojs/rss": "^4.0.10",
     "astro": "^5.0.5",
+    "dayjs": "^1.11.13",
     "preact": "^10.25.1"
   },
   "devDependencies": {

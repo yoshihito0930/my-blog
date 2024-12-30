@@ -1,0 +1,29 @@
+---
+interface Props {
+  name: string;
+  href: string;
+  focused: boolean | undefined;
+}
+const { name, href, focused } = Astro.props;
+---
+
+{
+  focused ? (
+    <a class="focus" href={href}>{name}</a>
+  ) : (
+    <a class="nonForcus" href={href}>{name}</a>
+  )
+}
+
+<style>
+  .focus {
+    color: #474747;
+    font-size: 0.9rem;
+    padding-top: 10px;
+  }
+  .nonForcus {
+    color: #666;
+    font-size: 0.9rem;
+    padding-top: 50px;
+  }
+</style>

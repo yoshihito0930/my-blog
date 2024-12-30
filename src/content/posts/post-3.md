@@ -1,13 +1,13 @@
 ---
-title: '私の最初のブログ記事'
-pubDate: 2022-07-01
-description: 'これは私の新しいAstroブログの最初の記事です。'
-image:
-    url: 'https://docs.astro.build/assets/full-logo-light.png'
-    alt: 'Astroのロゴ。'
-tags: ["astro", "ブログ", "公開学習"]
+title: '技術検証'
+summary: 'summary'
+categories: ['category']
+tags: ['database', 'oracle', 'aws', 'container']
+publishedAt: 2023-12-28
+modifiedAt:
+draft: false
 ---
-# 私の最初のブログ記事
+## 私の最初のブログ記事
 Astroの学習についての私の _新しいブログ_ へようこそ！ここでは、新しいウェブサイトを作りながら、私の学習過程を共有します。
 
 ## 達成したこと

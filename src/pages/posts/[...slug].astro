@@ -1,0 +1,27 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import PostList from "../../components/PostList.astro";
+import { Page } from "astro";
+
+// 1. コレクションエントリーごとに新しいパスを生成
+export async function getStaticPaths() {
+  const blogEntries = await getCollection('posts');
+  return blogEntries.map(entry => ({
+    params: { slug: entry.slug }, props: { entry },
+  }));
+}
+// 2. テンプレートでは、プロパティからエントリーを直接取得できる
+const { entry } = Astro.props;
+const { Content } = await entry.render();
+---
+<BaseLayout>
+    <h1>{entry.data.title}</h1>
+    <Content class="content" />
+</BaseLayout>
+
+<style>
+    .content {
+        margin-left: 20%;
+    }
+</style>

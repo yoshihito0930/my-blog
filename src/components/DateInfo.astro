@@ -1,0 +1,23 @@
+---
+import { formatDate } from "../utils/date";
+
+interface Props {
+  publishedAt: Date;
+  modifiedAt: Date | undefined;
+}
+
+const { publishedAt, modifiedAt } = Astro.props;
+---
+
+<div class="space-x-1">
+  <time class="text-sm text-base text-gray-500" datetime={publishedAt.toISOString()}>
+    {formatDate(publishedAt)}
+  </time>
+  {
+    modifiedAt && (
+      <time class="text-sm text-base text-gray-500" datetime={modifiedAt?.toISOString()}>
+        ({formatDate(modifiedAt)})
+      </time>
+    )
+  }
+</div>

@@ -1,0 +1,100 @@
+---
+import { CollectionEntry } from "astro:content";
+import Tag from "./Tag.astro";
+import { getTagMap } from "../content/utils";
+import DateInfo from "../components/DateInfo.astro";
+
+const tagMap = await getTagMap();
+
+interface Props {
+  posts: CollectionEntry<"posts">[];
+  focusedTagId: string | undefined;
+}
+
+const { posts, focusedTagId } = Astro.props;
+---
+<section>
+    <ul class="post-list">
+        {
+            posts.map((post) => (
+                <li class="post-item">
+                    <article>
+                        <div class="post-content">
+                            <DateInfo
+                                publishedAt={post.data.publishedAt}
+                                modifiedAt={post.data.modifiedAt}
+                            />
+                            <div>
+                                <h2 class="post-title">
+                                    <a href={`/posts/${post.slug}`} rel="prefetch" class="post-link">
+                                        {post.data.title}
+                                    </a>
+                                </h2>
+                            </div>
+                            {post.data.summary && (
+                                <summary>
+                                    <div class="post-summary">
+                                        <a href={`/posts/${post.slug}`} class="post-link">
+                                            <p>{post.data.summary}</p>
+                                        </a>
+                                    </div>
+                                </summary>
+                            )}
+                            <div class="post-tags">
+                                {post.data.tags.map((tagId) => (
+                                    <Tag
+                                        name={tagMap.get(tagId).name ?? ""}
+                                        href={`/tags/${tagId}`}
+                                        focused={focusedTagId === tagId}
+                                    />
+                                ))}
+                            </div>
+                        </div>
+                    </article>
+                </li>
+            ))
+        }
+    </ul>
+</section>
+
+<style>
+    .post-list {
+        list-style-type: none;
+        padding: 0;
+        border-top: 1px solid #e5e7eb;
+    }
+
+    .post-item {
+        padding: 1.5rem 0;
+        border-bottom: 1px solid #e5e7eb;
+    }
+
+    .post-content {
+        margin-bottom: 1rem;
+    }
+
+    .post-title {
+        font-size: 1.125rem;
+        color: #1f2937;
+        font-weight: bold;
+        line-height: 1.75rem;
+        text-decoration: none;
+    }
+
+    .post-link {
+        text-decoration: none;
+        color: inherit;
+    }
+
+    .post-summary {
+        font-size: 1rem;
+        color: #4b5563;
+        line-height: 1.75rem;
+    }
+
+    .post-tags {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.5rem;
+    }
+</style>

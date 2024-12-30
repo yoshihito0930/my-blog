@@ -1,19 +1,29 @@
+---
+import { BLOG_TITLE } from "../constraint";
+---
 <header class="header">
-    <h1><a href="/">Yoshihito Tech Blog</a></h1>
-    <nav class="nav">
-      <a href="/profile">Profile</a>
-      <a href="/blog">Blog</a>
-    </nav>
-  </header>
+  <h1><a href="/">{BLOG_TITLE}</a></h1>
+  <nav class="nav">
+    <a href="/profile">Profile</a>
+    <a href="/blog">Blog</a>
+  </nav>
+</header>
   
 <style>
-.header {
-    display: flex;
-    padding: 1rem;
-}
-.nav a {
-    margin-left: 1rem;
-    text-decoration: none;
-    color: black;
-}
+  .header {
+      display: flex;
+      padding: 0.5rem;
+  }
+  .header h1 {
+    margin-left: 10%;
+    font-size: 25px;
+  }
+  .nav {
+      margin-right: 20%;
+  }
+  .nav a {
+      margin-left: 1rem;
+      text-decoration: none;
+      color: black;
+  }
 </style>

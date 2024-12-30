@@ -1,14 +1,12 @@
 ---
 // コンポーネントをインポート
+import { getCollection, getEntry } from 'astro:content';
 import BaseLayout from '../layouts/BaseLayout.astro';
 import BlogCard from '../components/BlogCard.astro';
+import { postsDefaultSortFunc } from "../content/utils";
 
 // 仮データ
-const blogPosts = [
-  { date: '2024/12/12', title: 'メルカリのデザインシステムとFlutter', category: 'Client side', image: '/image1.png' },
-  { date: '2024/12/12', title: 'Slackの検索テクニック', category: 'Organization', image: '/image2.png' },
-  { date: '2024/12/11', title: 'Sever Driven UIの拡張', category: 'Client side', image: '/image3.png' },
-];
+const allPosts = (await getCollection("posts")).sort(postsDefaultSortFunc);
 
 const categories = [
   { name: 'AI', count: 71 },
@@ -23,22 +21,15 @@ const totalPages = 5;
   <div class="container">
     <!-- ブログカードセクション -->
     <div class="blog-container">
-      {blogPosts.map(post => (
-        <BlogCard 
-          date={post.date}
-          title={post.title}
-          category={post.category}
-          image={post.image}
-        />
-      ))}
+        <BlogCard />
       <div class="pagination">
-        <button>Previous</button>
-        {[...Array(totalPages).keys()].map(page => (
-          <button class={currentPage === page + 1 ? 'active' : ''}>
-            {page + 1}
-          </button>
-        ))}
-        <button>Next</button>
+      <button>Previous</button>
+      {[...Array(totalPages).keys()].map(page => (
+        <button class={currentPage === page + 1 ? 'active' : ''}>
+        {page + 1}
+        </button>
+      ))}
+      <button>Next</button>
       </div>
     </div>
 
@@ -66,5 +57,8 @@ const totalPages = 5;
     margin: 0 auto;
     padding-right: 20px;
     padding-left: 20px;
+  }
+  .blog-container {
+    gap: 10px; /* 間隔を狭める */
   }
 </style>
