@@ -16,6 +16,10 @@ const { entry } = Astro.props;
 const { Content } = await entry.render();
 ---
 <BaseLayout>
+    <p>
+        {new Date(entry.data.publishedAt).toLocaleDateString('ja-JP', { year: 'numeric', month: '2-digit', day: '2-digit' })}
+        {entry.data.modifiedAt && `(${new Date(entry.data.modifiedAt).toLocaleDateString('ja-JP', { year: 'numeric', month: '2-digit', day: '2-digit' })})`}
+    </p>
     <h1>{entry.data.title}</h1>
     <Content class="content" />
 </BaseLayout>

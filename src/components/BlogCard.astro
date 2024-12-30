@@ -8,7 +8,6 @@ export interface BlogProps {
   title: string;
 }
 
-const { date, title } = Astro.props;
 const allPosts = (await getCollection("posts")).sort(postsDefaultSortFunc);
 
 ---
