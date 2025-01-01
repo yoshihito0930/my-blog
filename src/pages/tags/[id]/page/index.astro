@@ -1,0 +1,57 @@
+---
+import BaseLayout from '../../../..//layouts/BaseLayout.astro';
+import { getCollection } from "astro:content";
+import { BLOG_TITLE, PAGE_SIZE } from "../../../../constraint";
+import { postsDefaultSortFunc } from "../../../../content/utils";
+import PostList from "../../../../components/PostList.astro";
+import Pagination from "../../../../components/Pagination.astro";
+import type { CollectionEntry } from "astro:content";
+
+export async function getStaticPaths() {
+  const allTags = await getCollection("tags");
+  return allTags.map((tag) => {
+    return {
+      params: { id: tag.id },
+      props: { tag: tag.data },
+    };
+  });
+}
+
+const { id } = Astro.params;
+
+interface Props {
+  tag: CollectionEntry<"tags">;
+}
+
+const { tag } = Astro.props;
+
+const allPosts = (await getCollection("posts"))
+  .sort(postsDefaultSortFunc)
+  .filter((post) => !post.data.draft);
+
+const filteredPosts = allPosts.filter((post) => post.data.tags.includes(id));
+
+const slicedPosts = filteredPosts.slice(0, PAGE_SIZE);
+
+const urlPrefix = `/tags/${id}/page`;
+---
+
+<BaseLayout title={`${tag.data.name} - ${BLOG_TITLE}`}>
+  <PostList posts={slicedPosts} focusedTagId={id} />
+  <Pagination
+    urlPrefix={urlPrefix}
+    page={{
+      currentPage: 1,
+      size: PAGE_SIZE,
+      lastPage: Math.ceil(filteredPosts.length / PAGE_SIZE),
+      url: {
+        current: `/posts/tags/${id}/page/1`,
+        prev: undefined,
+        next:
+          filteredPosts.length > PAGE_SIZE
+            ? `/posts/tags/${id}/page/2`
+            : undefined,
+      },
+    }}
+  />
+</BaseLayout>

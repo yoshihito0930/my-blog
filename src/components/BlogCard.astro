@@ -15,7 +15,7 @@ const allPosts = (await getCollection("posts")).sort(postsDefaultSortFunc);
   const postDate = new Date(post.data.publishedAt).toLocaleDateString('ja-JP', { year: 'numeric', month: '2-digit', day: '2-digit' });
   const postTitle = post.data.title;
   const postTags = post.data.tags.map(tag => (
-    <Tag name={tag} href="#" focused={false} />
+    <Tag name={tag} href="/tags/${tag}" focused={false} />
   )).reduce((prev, curr) => [prev, ' ', curr]);
   const postUrl = `/posts/${post.slug}`;
   return (
