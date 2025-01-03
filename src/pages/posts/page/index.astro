@@ -24,7 +24,7 @@ const posts = page.data;
 const urlPrefix = `/posts/page`;
 ---
 
-<BaseLayout title={`Posts(${page.currentPage}/${page.lastPage}) - ${BLOG_TITLE}`}>
+<BaseLayout title={BLOG_TITLE}>
     <Pagination page={page} urlPrefix={urlPrefix} />
     <PostList posts={posts} />
     <Pagination page={page} urlPrefix={urlPrefix} />
