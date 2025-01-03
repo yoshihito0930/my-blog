@@ -1,0 +1,66 @@
+---
+import { getCollection, CollectionEntry } from "astro:content";
+import BaseLayout from "../../../layouts/BaseLayout.astro";
+import type { Page } from "astro";
+import PostList from "../../../components/PostList.astro";
+import { postsDefaultSortFunc } from "../../../content/utils";
+import { BLOG_TITLE, PAGE_SIZE } from "../../../constraint";
+import Pagination from "../../../components/Pagination.astro";
+import Tag from "../../../components/Tag.astro";
+
+export async function getStaticPaths({ paginate }) {
+  const allPosts = await getCollection("posts", ({ data }) => {
+    return !data.draft;
+  });
+  return paginate(allPosts.sort(postsDefaultSortFunc), { pageSize: PAGE_SIZE });
+}
+
+interface Props {
+  page: Page<CollectionEntry<"posts">>;
+}
+
+const allPosts = (await getCollection("posts")).sort(postsDefaultSortFunc);
+
+const { page } = Astro.props;
+const posts = page.data;
+const tags = [...new Set(allPosts.map((post) => post.data.tags).flat())];
+
+const urlPrefix = `/posts/page`;
+---
+
+<BaseLayout title={BLOG_TITLE}>
+  <div class="container">
+    <div class="blog-container">
+      <Pagination page={page} urlPrefix={urlPrefix} />
+      <PostList posts={posts} />
+      <Pagination page={page} urlPrefix={urlPrefix} />
+    </div>
+    <aside class="sidebar">
+      <div class="categories">
+        <h3>Tags</h3>
+        <ul>
+          {tags.map(tag => (
+            <Tag name={tag} href={`/tags/${tag}`} focused={false} />
+          ))}
+        </ul>
+      </div>
+    </aside>
+  </div>
+</BaseLayout>
+
+<style>
+  .container {
+    margin: 0 auto;
+    padding-right: 20px;
+    padding-left: 20px;
+  }
+  .blog-container {
+    display: flex;
+    align-items: stretch;
+  }
+  .ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+</style>
