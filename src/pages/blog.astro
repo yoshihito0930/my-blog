@@ -1,30 +1,35 @@
 ---
-// コンポーネントをインポート
 import { getCollection, getEntry } from 'astro:content';
 import BaseLayout from '../layouts/BaseLayout.astro';
-import BlogCard from '../components/BlogCard.astro';
 import { postsDefaultSortFunc } from "../content/utils";
 import Tag from "../components/Tag.astro"
+import Pagination from '../components/Pagination.astro';
+import PostList from "../components/PostList.astro";
+import { BLOG_TITLE, PAGE_SIZE } from "../constraint";
 
-const allPosts = await getCollection("posts");
+const allPosts = (await getCollection("posts")).sort(postsDefaultSortFunc);
+
+const posts = allPosts.slice(0, PAGE_SIZE).filter((post) => !post.data.draft);
+
 const tags = [...new Set(allPosts.map((post) => post.data.tags).flat())];
-const currentPage = 1;
-const totalPages = 5;
 ---
 <BaseLayout>
   <div class="container">
     <!-- ブログカードセクション -->
     <div class="blog-container">
-        <BlogCard />
-      <div class="pagination">
-      <button>Previous</button>
-      {[...Array(totalPages).keys()].map(page => (
-        <button class={currentPage === page + 1 ? 'active' : ''}>
-        {page + 1}
-        </button>
-      ))}
-      <button>Next</button>
-      </div>
+      <PostList posts={posts} />
+      <Pagination
+        page={{ currentPage: 1,
+                size: PAGE_SIZE,
+                lastPage: Math.ceil(allPosts.length / PAGE_SIZE),
+                url: {
+                  current: '/posts/page/1"',
+                  prev: 'undefined',
+                  next: '/posts/page/2'
+                }
+              }}
+        urlPrefix="/posts/page"
+      />
     </div>
 
     <!-- サイドバー -->
@@ -42,14 +47,18 @@ const totalPages = 5;
 </BaseLayout>
 
 <style>
-  .container{
-    width: 100%;
-    max-width: 1084px;
+  .container {
     margin: 0 auto;
     padding-right: 20px;
     padding-left: 20px;
   }
   .blog-container {
-    gap: 10px; /* 間隔を狭める */
+    display: flex;
+    align-items: stretch;
+  }
+  .ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
   }
 </style>
