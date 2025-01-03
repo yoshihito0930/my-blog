@@ -25,7 +25,7 @@ const { posts } = Astro.props;
                     {
                         post.data.tags.map(
                             tag => (
-                            <Tag name={tag} href="/tags/${tag}" focused={false} />
+                            <Tag name={tag} href={`/tags/${tag}`} focused={false} />
                             )
                         ).reduce((prev, curr) => [prev, ' ', curr])
                     }

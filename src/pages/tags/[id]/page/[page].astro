@@ -1,0 +1,42 @@
+---
+import BaseLayout from "../../../../layouts/BaseLayout.astro";
+import { postsDefaultSortFunc } from "../../../../content/utils";
+import type { Page } from "astro";
+import { getCollection, CollectionEntry } from "astro:content";
+import PostList from "../../../../components/PostList.astro";
+import Pagination from "../../../../components/Pagination.astro";
+import { BLOG_TITLE, PAGE_SIZE } from "../../../../constraint";
+
+export async function getStaticPaths({ paginate }) {
+  const allTags = await getCollection("tags");
+  const allPosts = await getCollection("posts");
+  return allTags.flatMap((tag) => {
+    const filteredPosts = allPosts
+      .sort(postsDefaultSortFunc)
+      .filter((p) => p.data.tags.includes(tag.id) && !p.data.draft);
+    return paginate(filteredPosts, {
+      params: { id: tag.id },
+      pageSize: PAGE_SIZE,
+      props: { tag: tag.data },
+    });
+  });
+}
+
+interface Props {
+  id: string;
+  page: Page<CollectionEntry<"posts">>;
+  tag: CollectionEntry<"tags">;
+}
+
+const { page, tag } = Astro.props;
+const { id } = Astro.params;
+const posts = page.data;
+
+const urlPrefix = `/tags/${id}/page`;
+---
+
+<BaseLayout>
+  <Pagination page={page} urlPrefix={urlPrefix} />
+  <PostList posts={posts} />
+  <Pagination page={page} urlPrefix={urlPrefix} />
+</BaseLayout>

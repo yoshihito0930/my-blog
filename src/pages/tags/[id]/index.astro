@@ -1,10 +1,10 @@
 ---
-import BaseLayout from '../../../..//layouts/BaseLayout.astro';
+import BaseLayout from '../../../layouts/BaseLayout.astro';
 import { getCollection } from "astro:content";
-import { BLOG_TITLE, PAGE_SIZE } from "../../../../constraint";
-import { postsDefaultSortFunc } from "../../../../content/utils";
-import PostList from "../../../../components/PostList.astro";
-import Pagination from "../../../../components/Pagination.astro";
+import { BLOG_TITLE, PAGE_SIZE } from "../../../constraint";
+import { postsDefaultSortFunc } from "../../../content/utils";
+import PostList from "../../../components/PostList.astro";
+import Pagination from "../../../components/Pagination.astro";
 import type { CollectionEntry } from "astro:content";
 
 export async function getStaticPaths() {
@@ -23,8 +23,6 @@ interface Props {
   tag: CollectionEntry<"tags">;
 }
 
-const { tag } = Astro.props;
-
 const allPosts = (await getCollection("posts"))
   .sort(postsDefaultSortFunc)
   .filter((post) => !post.data.draft);
@@ -36,7 +34,7 @@ const slicedPosts = filteredPosts.slice(0, PAGE_SIZE);
 const urlPrefix = `/tags/${id}/page`;
 ---
 
-<BaseLayout title={`${tag.data.name} - ${BLOG_TITLE}`}>
+<BaseLayout>
   <PostList posts={slicedPosts} />
   <Pagination
     urlPrefix={urlPrefix}
