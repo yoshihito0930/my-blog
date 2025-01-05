@@ -24,7 +24,7 @@ const tags = [...new Set(allPosts.map((post) => post.data.tags).flat())];
                 lastPage: Math.ceil(allPosts.length / PAGE_SIZE),
                 url: {
                   current: '/posts/page/1"',
-                  prev: 'undefined',
+                  prev: '',
                   next: '/posts/page/2'
                 }
               }}
