@@ -1,60 +1,93 @@
 ---
-import '../styles/global.css';
+import '../styles/profile.css';
 import BaseLayout from '../layouts/BaseLayout.astro';
-
-const pageTitle = '私について';
-const identity = {
-  firstName: "サラ",
-  country: "カナダ",
-  occupation: "技術ライター",
-  hobbies: ["写真", "バードウォッチング", "野球"],
-};
-
-const skills = ["HTML", "CSS", "JavaScript", "React", "Astro", "ドキュメントの執筆"];
-
-const happy = true;
-const finished = true;
-const goal = 3;
-
-const skillColor = "navy";
-const fontWeight = "bold";
-const textCase = "uppercase";
 ---
 
-<BaseLayout pageTitle={pageTitle}>
-    <style define:vars={{skillColor, fontWeight, textCase}}>
-        h1 {
-            color: purple;
-            font-size: 4rem;
-        }
-        .skill {
-            color: var(--skillColor);
-            font-weight: var(--fontWeight);
-            text-transform: var(--textCase);
-        }
-    </style>
-    <h1>{pageTitle}</h1>
-    <h2>... そして私の新しいAstroサイトについて！</h2>
+<BaseLayout>
+    <div class="profile">
+        <h2>Profile</h2>
+        <div class="profile_wrapper">
+            <div class="face_image">
+                <img src="/src/assets/face.jpg" alt="face" />
+            </div>
+            <div class="profile_info">
+                <p class="profile_name">Yoshihito Ishihara / 石原 賢人</p>
+                <p class="profile_job">Software Engineer (Infrastructure, Database)</p>
+            </div>
+        </div>
+    </div>
 
-    <p>私はAstroの入門チュートリアルを進めています。これは私のウェブサイトの2番目のページで、自分で作った初めてのページです！</p>
+    <div class="works">
+        <h2>Works</h2>
+        <ul>
+            <li>DB Tech Showcase 2022に登壇 <a href="https://www.publickey1.jp/blog/22/newsql_tispr.html" target="_blank">参考</a></li>
+            <li>Software Design 2023年8月号 第2特集 第4章 を寄稿 <a href="https://gihyo.jp/magazine/SD/archive/2023/202308" target="_blank">参考</a></li>
+        </ul>
+    </div>
 
-    <p>このサイトはチュートリアルを進めるにつれて更新されていきます。定期的にチェックして、私の旅の様子を見に来てください！</p>
+    <div class="skills">
+        <h2>Skills</h2>
+        <ul>
+            <li>Oracle</li>
+            <li>AWS</li>
+            <li>TiDB</li>
+            <li>Python</li>
+            <li>Golang</li>
+    </div>
 
-    <p>以下は私に関するいくつかの事実です。</p>
-    <ul>
-        <li>私の名前は{identity.firstName}です。</li>
-        <li>{identity.country}に住んでおり、{identity.occupation}として働いています。</li>
-        {identity.hobbies.length >= 2 &&
-            <li>私の2つの趣味は{identity.hobbies[0]}と{identity.hobbies[1]}です。</li>
-        }
-    </ul>
-    <p>私のスキルは以下の通りです。</p>
-    <ul>
-        {skills.map((skill) => <li class="skill">{skill}</li>)}
-    </ul>
-    {happy && <p>I am happy to be learning Astro! Astroを学べて幸せです！</p>}
+    <div class="experience">
+        <h2>Experience</h2> 
+        <p>2020.4 ~ Present : TIS.Inc</p>
+    </div>
 
-    {finished && <p>I finished this tutorial! このチュートリアルを終えました！</p>} 
+    <div class="certificate">
+        <h2>Certificate</h2>
+        <ul>
+            <li>ORACLE MASTER Silver DBA 2019</li>
+            <li>ORACLE MASTER Bronze DBA 2019</li>
+        </ul>
+    </div>
 
-    {goal === 3 ? <p>My goal is to finish in 3 days. 3日で終えるのが目標です。</p> : <p>My goal is not 3 days. 3日が目標ではありません。</p>}
+    <div class="resume">
+        <h2>Resume</h2>
+        <p>職務経歴書は<a href="https://docs.google.com/document/d/e/2PACX-1vQB12eW3gpD-de7_gOYKRz5W5U9qMS9Gvze4VGHfiKVWkYI7V3lHCzO6MjG7CbhQaYIB-VVngLnOmVo/pub" target="_blank">こちら</a>を参照ください</p>
+    </div>
 </BaseLayout>
+
+<style>
+    .profile{
+        margin-bottom: 20px;
+    }
+    .profile_wrapper {
+        display: flex;
+        align-items: center;
+    }
+    .face_image {
+        margin-right: 20px;
+    }
+    .face_image img {
+        width: 100px;
+        height: 120px;
+        border-radius: 50%;
+    }
+    .profile_info {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: left;
+    }
+    .profile_name {
+        font-size: 18px;
+        margin: 0;
+    }
+    .profile_job {
+        font-size: 18px;
+        margin: 0;
+        color: #6d6d6d;
+    }
+
+    a {
+        color: #11ab00;
+        text-decoration: none;
+    }
+</style>
