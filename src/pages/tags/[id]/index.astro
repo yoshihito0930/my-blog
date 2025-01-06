@@ -35,6 +35,7 @@ const urlPrefix = `/tags/${id}/page`;
 ---
 
 <BaseLayout>
+  <h2>Tag: {id}</h2>
   <PostList posts={slicedPosts} />
   <Pagination
     urlPrefix={urlPrefix}

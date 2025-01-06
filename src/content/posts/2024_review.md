@@ -1,9 +1,8 @@
 ---
-title: '技術検証'
-summary: 'summary'
-categories: ['category']
-tags: ['database', 'oracle', 'aws', 'container']
-publishedAt: 2023-12-28
+title: "2024年 振り返り"
+tags: ['goal', 'childCare']
+image: "../../assets/blog.jpeg"
+publishedAt: 2025-01-05
 modifiedAt:
 draft: false
 ---
