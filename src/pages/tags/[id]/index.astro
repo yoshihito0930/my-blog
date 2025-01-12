@@ -32,10 +32,12 @@ const filteredPosts = allPosts.filter((post) => post.data.tags.includes(id));
 const slicedPosts = filteredPosts.slice(0, PAGE_SIZE);
 
 const urlPrefix = `/tags/${id}/page`;
+
+const image = `/assets/${id}.png`;
 ---
 
 <BaseLayout>
-  <h2>Tag: {id}</h2>
+  <img src={image} alt="TAG image" class="tag-image" />
   <PostList posts={slicedPosts} />
   <Pagination
     urlPrefix={urlPrefix}
@@ -54,3 +56,14 @@ const urlPrefix = `/tags/${id}/page`;
     }}
   />
 </BaseLayout>
+
+<style>
+  .tag-image {
+    width: 200px;
+    height: 130px;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom: 10px;
+  }
+</style>
