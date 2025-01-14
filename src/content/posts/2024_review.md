@@ -1,7 +1,7 @@
 ---
 title: "2024年 振り返り"
 tags: ['goal', 'childCare', 'English']
-image: "/assets/blog.jpeg"
+image: "/assets//tags/goal.png"
 publishedAt: 2025-01-05
 modifiedAt:
 draft: false
