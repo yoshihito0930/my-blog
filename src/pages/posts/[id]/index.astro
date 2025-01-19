@@ -2,16 +2,13 @@
 import { getCollection } from 'astro:content';
 import BaseLayout from '../../../layouts/BaseLayout.astro';
 import PostList from "../../../components/PostList.astro";
-import { Page } from "astro";
 
 // 1. コレクションエントリーごとに新しいパスを生成
 export async function getStaticPaths() {
   const blogEntries = await getCollection('posts');
-  console.log('blogEntries:', blogEntries); // デバッグ用ログ
   const paths = blogEntries.map(entry => ({
     params: { id: entry.id.replace('.md', ''), slug: entry.slug }, props: { entry },
   }));
-  console.log('paths:', paths); // デバッグ用ログ
   return paths;
 }
 // 2. テンプレートでは、プロパティからエントリーを直接取得できる

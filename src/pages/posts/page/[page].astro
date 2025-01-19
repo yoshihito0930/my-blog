@@ -1,5 +1,6 @@
 ---
-import { getCollection, CollectionEntry } from "astro:content";
+import { getCollection } from "astro:content";
+import type { CollectionEntry } from "astro:content";
 import BaseLayout from "../../../layouts/BaseLayout.astro";
 import type { Page } from "astro";
 import PostList from "../../../components/PostList.astro";
@@ -8,7 +9,7 @@ import { BLOG_TITLE, PAGE_SIZE } from "../../../constraint";
 import Pagination from "../../../components/Pagination.astro";
 import Tag from "../../../components/Tag.astro";
 
-export async function getStaticPaths({ paginate }) {
+export async function getStaticPaths({ paginate }: { paginate: any }) {
   const allPosts = await getCollection("posts", ({ data }) => {
     return !data.draft;
   });
