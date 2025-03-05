@@ -20,11 +20,17 @@ const { Content } = await entry.render();
         {new Date(entry.data.publishedAt).toLocaleDateString('ja-JP', { year: 'numeric', month: '2-digit', day: '2-digit' })}
         {entry.data.modifiedAt && `(${new Date(entry.data.modifiedAt).toLocaleDateString('ja-JP', { year: 'numeric', month: '2-digit', day: '2-digit' })})`}
     </p>
-    <h1>{entry.data.title}</h1>
+    <div class="title">{entry.data.title}</div>
     <Content class="content" />
 </BaseLayout>
 
 <style>
+    .title {
+        font-size: 1.5em;
+        font-weight: bold;
+        margin: 1em 0;
+        border-bottom: 1px solid #a3a3a3;
+    }
     .content {
         margin-left: 20%;
     }

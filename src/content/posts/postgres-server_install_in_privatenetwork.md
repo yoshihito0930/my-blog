@@ -28,7 +28,8 @@ draft: false
 
 ## 詳細
 ### ISOファイルをマウント
-私が作成したEC2インスタンスには、/media配下にISOファイルが存在していたため、以下コマンドでマウントする。
+私が作成したEC2インスタンスには、/media配下にISOファイルが存在していたため、  
+以下コマンドでマウントする。
 ```
 sudo mount -o loop /media/rhel-8.1-x86_64-dvd.iso /mnt
 ```
@@ -90,7 +91,7 @@ sudo dnf install -y postgresql
 
 # バージョン確認
 psql --version
-```
+```  
 
 ## 補足
 ### マウントとは？
