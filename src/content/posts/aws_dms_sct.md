@@ -1,6 +1,6 @@
 ---
 title: "AWS DMSとSCTを使って、OracleからPostgreSQLへマイグレーションしてみた
-tags: ['aws', 'database']
+tags: ['AWS', 'database']
 image: "/assets/tags/goal.png"
 publishedAt: 2025-01-31
 modifiedAt:
