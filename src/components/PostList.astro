@@ -63,9 +63,11 @@ const { posts } = Astro.props;
     }
     .title {
       font-size: 1.25rem;
-      padding: 5px ;
+      padding: 5px;
       font-weight: bold;
       margin-left: 1rem;
+      white-space: normal; /* Ensure text wraps to the next line */
+      overflow: visible; /* Ensure overflow is visible */
     }
     .date {
       font-size: 0.9rem;
