@@ -1,6 +1,6 @@
 ---
 title: "AWS Fargate + セッションマネージャーをつかって、RDS接続用のbastionを構築する際に詰まったポイント"
-tags: ['AWS']
+tags: ['aws']
 image: "/assets/tags/aws.png"
 publishedAt: 2024-08-07
 modifiedAt:

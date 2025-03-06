@@ -1,6 +1,6 @@
 ---
 title: "AWSコンテナ設計・構築［本格］入門"
-tags: ['AWS']
+tags: ['aws']
 image: "/assets/tags/aws.png"
 publishedAt: 2023-12-09
 modifiedAt:

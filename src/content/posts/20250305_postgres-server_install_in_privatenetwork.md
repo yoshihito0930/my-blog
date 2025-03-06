@@ -1,6 +1,6 @@
 ---
 title: "ネットワーク接続できないEC2(Linux)で、postgresql-serverをインストールする方法"
-tags: ['AWS', 'RHEL', 'PostgreSQL']
+tags: ['aws', 'RHEL', 'PostgreSQL']
 image: "/assets/tags/aws.png"
 publishedAt: 2025-03-05
 modifiedAt:
