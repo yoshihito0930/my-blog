@@ -1,6 +1,6 @@
 ---
 title: "AWS Lambda関数をGolangで実装し、Github Actionsで構築自動化してみた"
-tags: ['AWS', 'Golang']
+tags: ['AWS', 'Golang', 'GithubActions']
 image: "/assets/tags/aws.png"
 publishedAt: 2024-07-12
 modifiedAt:

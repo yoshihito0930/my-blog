@@ -1,6 +1,6 @@
 ---
 title: "Oracle Reconfigurationの長時間化"
-tags: ['Oracle']
+tags: ['ORACLE']
 image: "/assets/tags/oracle.png"
 publishedAt: 2023-02-23
 modifiedAt:
