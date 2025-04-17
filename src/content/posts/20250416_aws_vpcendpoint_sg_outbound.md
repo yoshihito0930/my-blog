@@ -1,7 +1,7 @@
 ---
 title: "VPCエンドポイントに設定するSGのアウトバウンドルールについて"
 tags: ['aws']
-image: "/assets/blog/20250417_vpcendpoint_eni.png"
+image: "/assets/blog/20250417_vpcendpoint_sg.png"
 publishedAt: 2025-04-17
 modifiedAt:
 draft: false
