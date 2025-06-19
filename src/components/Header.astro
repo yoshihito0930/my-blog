@@ -1,29 +1,131 @@
 ---
 import { BLOG_TITLE } from "../constraint";
+import Hamburger from "./Hamburger.astro";
 ---
 <header class="header">
-  <h1><a href="/">{BLOG_TITLE}</a></h1>
-  <nav class="nav">
-    <a href="/profile">Profile</a>
-    <a href="/posts">Blog</a>
-  </nav>
+  <div class="container">
+    <div class="header-content">
+      <h1 class="site-title"><a href="/">{BLOG_TITLE}</a></h1>
+      
+      <!-- モバイル用メニューボタン -->
+      <div class="menu-button">
+        <Hamburger />
+      </div>
+      
+      <!-- デスクトップナビゲーション -->
+      <nav class="nav-desktop">
+        <a href="/profile">Profile</a>
+        <a href="/posts">Blog</a>
+      </nav>
+    </div>
+  </div>
 </header>
-  
+
+<!-- モバイルナビゲーション -->
+<nav id="mobile-nav" class="nav-mobile">
+  <a href="/profile">Profile</a>
+  <a href="/posts">Blog</a>
+</nav>
+
 <style>
   .header {
+    background-color: var(--color-secondary);
+    color: var(--color-text-inverse);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    box-shadow: var(--shadow-sm);
+  }
+  
+  .header-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: var(--spacing-md) 0;
+  }
+  
+  .site-title {
+    font-size: var(--font-size-xl);
+    margin: 0;
+  }
+  
+  .site-title a {
+    color: var(--color-text-inverse);
+    text-decoration: none;
+    font-weight: bold;
+  }
+  
+  .nav-desktop {
+    display: none;
+  }
+  
+  .nav-desktop a {
+    color: var(--color-text-inverse);
+    text-decoration: none;
+    margin-left: var(--spacing-lg);
+    padding: var(--spacing-sm) var(--spacing-md);
+    border-radius: var(--border-radius-md);
+    transition: background-color var(--transition-fast);
+  }
+  
+  .nav-desktop a:hover {
+    background-color: var(--color-secondary-light);
+  }
+  
+  .nav-mobile {
+    display: flex;
+    flex-direction: column;
+    background-color: var(--color-secondary);
+    padding: var(--spacing-md);
+    transform: translateY(-100%);
+    position: absolute;
+    top: 60px;
+    left: 0;
+    width: 100%;
+    transition: transform var(--transition-base);
+    z-index: 99;
+  }
+  
+  .nav-mobile.open {
+    transform: translateY(0);
+  }
+  
+  .nav-mobile a {
+    color: var(--color-text-inverse);
+    text-decoration: none;
+    padding: var(--spacing-md) 0;
+    border-bottom: 1px solid var(--color-secondary-light);
+  }
+  
+  .menu-button {
+    display: block;
+  }
+  
+  /* タブレット以上 */
+  @media (min-width: 768px) {
+    .menu-button {
+      display: none;
+    }
+    
+    .nav-desktop {
       display: flex;
-      padding: 0.5rem;
-  }
-  .header h1 {
-    margin-left: 10%;
-    font-size: 25px;
-  }
-  .nav {
-      margin-right: 20%;
-  }
-  .nav a {
-      margin-left: 1rem;
-      text-decoration: none;
-      color: black;
+    }
+    
+    .nav-mobile {
+      display: none;
+    }
   }
 </style>
+
+<script>
+  // Hamburgerメニューの動作
+  document.addEventListener('DOMContentLoaded', () => {
+    const hamburger = document.querySelector('.hamburger');
+    const mobileNav = document.getElementById('mobile-nav');
+    
+    hamburger?.addEventListener('click', () => {
+      mobileNav?.classList.toggle('open');
+      hamburger.classList.toggle('active');
+    });
+  });
+</script>

@@ -1,0 +1,73 @@
+/* ベースレイアウト */
+.container {
+  width: 100%;
+  padding: 0 var(--spacing-md);
+  margin: 0 auto;
+}
+
+/* レスポンシブコンテナ */
+@media (min-width: 576px) {
+  .container {
+    max-width: 540px;
+  }
+}
+
+@media (min-width: 768px) {
+  .container {
+    max-width: 720px;
+  }
+}
+
+@media (min-width: 992px) {
+  .container {
+    max-width: 960px;
+  }
+}
+
+@media (min-width: 1200px) {
+  .container {
+    max-width: var(--container-max-width);
+  }
+}
+
+/* グリッドシステム */
+.grid {
+  display: grid;
+  gap: var(--spacing-md);
+}
+
+/* モバイルファーストのグリッド列定義 */
+.col-1 { grid-template-columns: repeat(1, 1fr); }
+.col-2 { grid-template-columns: repeat(2, 1fr); }
+
+/* メディアクエリでブレイクポイントごとの列数を調整 */
+@media (min-width: 768px) {
+  .md\:col-2 { grid-template-columns: repeat(2, 1fr); }
+  .md\:col-3 { grid-template-columns: repeat(3, 1fr); }
+  .md\:col-4 { grid-template-columns: repeat(4, 1fr); }
+  
+  /* 特別なレイアウト比率 */
+  .md\:col-1-2 { grid-template-columns: 1fr 2fr; }
+  .md\:col-2-1 { grid-template-columns: 2fr 1fr; }
+  .md\:col-3-1 { grid-template-columns: 3fr 1fr; }
+}
+
+/* フレックスボックスユーティリティ */
+.flex { display: flex; }
+.flex-col { flex-direction: column; }
+.justify-center { justify-content: center; }
+.justify-between { justify-content: space-between; }
+.justify-end { justify-content: flex-end; }
+.items-center { align-items: center; }
+.items-start { align-items: flex-start; }
+.items-end { align-items: flex-end; }
+.flex-wrap { flex-wrap: wrap; }
+.gap-sm { gap: var(--spacing-sm); }
+.gap-md { gap: var(--spacing-md); }
+.gap-lg { gap: var(--spacing-lg); }
+
+/* スペーシングユーティリティ */
+.mt-md { margin-top: var(--spacing-md); }
+.mb-md { margin-bottom: var(--spacing-md); }
+.py-md { padding-top: var(--spacing-md); padding-bottom: var(--spacing-md); }
+.px-md { padding-left: var(--spacing-md); padding-right: var(--spacing-md); }

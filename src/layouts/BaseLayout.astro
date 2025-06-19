@@ -2,7 +2,21 @@
 // コンポーネントとスタイルをインポート
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
+import "../styles/variables.css";
+import "../styles/layout.css";
 import "../styles/global.css";
+
+interface Props {
+  title?: string;
+  description?: string;
+  ogImage?: string;
+}
+
+const { 
+  title = "Yoshihito Tech Blog",
+  description = "技術的な発見や学びを共有するブログ",
+  ogImage = "/assets/ogp/default.png"
+} = Astro.props;
 ---
 
 <!DOCTYPE html>
@@ -10,20 +24,24 @@ import "../styles/global.css";
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Yoshihito Tech Blog</title>
+    <meta name="description" content={description} />
+    <title>{title}</title>
+    
+    <!-- OGP設定 -->
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:image" content={ogImage} />
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="Yoshihito Tech Blog" />
+    
+    <!-- ファビコン -->
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
   </head>
   <body>
     <Header />
-    <div class="content">
+    <main class="container">
       <slot /> <!-- コンテンツ表示 -->
-    </div>
+    </main>
     <Footer />
   </body>
 </html>
-
-<style>
-  .content {
-    margin-left: 20%;
-    margin-right: 20%;
-  }
-</style>

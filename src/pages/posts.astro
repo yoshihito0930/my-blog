@@ -13,52 +13,84 @@ const posts = allPosts.slice(0, PAGE_SIZE).filter((post) => !post.data.draft);
 
 const tags = [...new Set(allPosts.map((post) => post.data.tags).flat())];
 ---
-<BaseLayout>
-  <div class="container">
-    <!-- ブログカードセクション -->
-    <div class="blog-container">
-      <PostList posts={posts} />
-      <Pagination
-        page={{ currentPage: 1,
-                size: PAGE_SIZE,
-                lastPage: Math.ceil(allPosts.length / PAGE_SIZE),
-                url: {
-                  current: '/posts/page/1"',
-                  prev: '',
-                  next: '/posts/page/2'
-                }
-              }}
-        urlPrefix="/posts/page"
-      />
-    </div>
-
-    <!-- サイドバー -->
-    <aside class="sidebar">
-      <div class="categories">
-        <h3>Tags</h3>
-        <ul>
-          {tags.map(tag => (
-            <Tag name={tag} href={`/tags/${tag}`} focused={false} />
-          ))}
-        </ul>
+<BaseLayout title={BLOG_TITLE}>
+  <div class="page-container">
+    <!-- ブログ記事一覧のタイトルを削除し、ブログタイトルのみ表示 -->
+    
+    <div class="posts-layout">
+      <!-- tagバー -->
+      <div class="tagbar">
+        <div class="tagbar-section">
+          <h2 class="tagbar-title">Category</h2>
+          <div class="tags-container">
+            {tags.map(tag => (
+              <Tag name={tag} href={`/tags/${tag}`} focused={false} />
+            ))}
+          </div>
+        </div>
       </div>
-    </aside>
+
+      <!-- メインコンテンツ -->
+      <div class="main-content">
+        <PostList posts={posts} />
+        <Pagination
+          page={{ 
+            currentPage: 1,
+            size: PAGE_SIZE,
+            lastPage: Math.ceil(allPosts.length / PAGE_SIZE),
+            url: {
+              current: '/posts',
+              prev: undefined,
+              next: '/posts/page/2'
+            }
+          }}
+          urlPrefix="/posts"
+        />
+      </div>
+
+    </div>
   </div>
 </BaseLayout>
 
 <style>
-  .container {
+  .page-container {
+    width: 100%;
+    max-width: 1200px;
     margin: 0 auto;
-    padding-right: 20px;
-    padding-left: 20px;
+    padding: 20px;
   }
-  .blog-container {
+  
+  .page-title {
+    margin-bottom: var(--spacing-lg);
+    text-align: center;
+  }
+  
+  /* モバイルではメインコンテンツとサイドバーを縦に配置 */
+  .posts-layout {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: var(--spacing-xl);
+  }
+  
+  .main-content {
+    width: 100%;
+  }
+  
+  .tag-title {
+    font-size: var(--font-size-lg);
+    margin-bottom: var(--spacing-md);
+  }
+  
+  .tag-section {
+    background-color: var(--color-bg-card);
+    padding: var(--spacing-md);
+    border-radius: var(--border-radius-md);
+    box-shadow: var(--shadow-sm);
+  }
+  
+  .tags-container {
     display: flex;
-    align-items: stretch;
-  }
-  .ul {
-    list-style: none;
-    padding: 0;
-    margin: 0;
+    flex-wrap: wrap;
+    gap: var(--spacing-xs);
   }
 </style>

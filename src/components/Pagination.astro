@@ -18,86 +18,187 @@ interface Props {
 
 const { page, urlPrefix } = Astro.props;
 
-const paginations = Array.from({ length: page.lastPage }, (_, i) => i + 1);
+// 表示するページ番号を計算
+const getPageNumbers = () => {
+  const pageNumbers = [];
+  const MAX_VISIBLE_PAGES = 5;
+  
+  if (page.lastPage <= MAX_VISIBLE_PAGES) {
+    // ページが少ない場合はすべて表示
+    for (let i = 1; i <= page.lastPage; i++) {
+      pageNumbers.push(i);
+    }
+  } else {
+    // 現在のページを中心に表示（最大5ページ）
+    let startPage = Math.max(page.currentPage - 2, 1);
+    let endPage = Math.min(startPage + MAX_VISIBLE_PAGES - 1, page.lastPage);
+    
+    // endPageが限界に達した場合は調整
+    if (endPage === page.lastPage) {
+      startPage = Math.max(endPage - MAX_VISIBLE_PAGES + 1, 1);
+    }
+    
+    // 1ページ目は常に表示
+    if (startPage > 1) {
+      pageNumbers.push(1);
+      if (startPage > 2) pageNumbers.push('...');
+    }
+    
+    // 中間のページ
+    for (let i = startPage; i <= endPage; i++) {
+      if (i !== 1 && i !== page.lastPage) {
+        pageNumbers.push(i);
+      }
+    }
+    
+    // 最終ページは常に表示
+    if (endPage < page.lastPage) {
+      if (endPage < page.lastPage - 1) pageNumbers.push('...');
+      pageNumbers.push(page.lastPage);
+    }
+  }
+  
+  return pageNumbers;
+};
+
+// URLを生成する関数
+const getPageUrl = (pageNum: number): string => {
+  if (pageNum === 1) {
+    return urlPrefix; // 1ページ目は /posts
+  }
+  return `${urlPrefix}/page/${pageNum}`; // 2ページ目以降は /posts/page/X
+};
+
+const pageNumbers = getPageNumbers();
 ---
 
-<nav>
-    <div class="pagination-container">
-        <ul class="pagination-list">
-            <li>
-                {
-                    page.url.prev ? (
-                        <a href={page.url.prev} class="pagination-link">
-                            Previous
-                        </a>
-                    ) : (
-                        <span class="pagination-link disabled">
-                            Previous
-                        </span>
-                    )
-                }
-            </li>
-            {
-                paginations.map((i) =>
-                    i === page.currentPage ? (
-                        <li>
-                            <a class="pagination-link active">{i}</a>
-                        </li>
-                    ) : (
-                        <li>
-                            <a href={`${urlPrefix}/${i}`} class="pagination-link">
-                                {i}
-                            </a>
-                        </li>
-                    ),
-                )
-            }
-            <li>
-                {
-                    page.url.next ? (
-                        <a href={page.url.next} class="pagination-link">
-                            Next
-                        </a>
-                    ) : (
-                        <span class="pagination-link disabled">
-                            Next
-                        </span>
-                    )
-                }
-            </li>
-        </ul>
-    </div>
+<nav class="pagination" aria-label="ページナビゲーション">
+  <ul class="pagination-list">
+    <!-- 前のページボタン -->
+    <li class="pagination-item">
+      {page.url.prev ? (
+        <a 
+          href={page.url.prev} 
+          class="pagination-link" 
+          aria-label="前のページ"
+        >
+          <span class="pagination-arrow">←</span>
+          <span class="pagination-text">前へ</span>
+        </a>
+      ) : (
+        <span class="pagination-link disabled">
+          <span class="pagination-arrow">←</span>
+          <span class="pagination-text">前へ</span>
+        </span>
+      )}
+    </li>
+    
+    <!-- ページ番号 -->
+    {pageNumbers.map(pageNum => (
+      <li class="pagination-item">
+        {typeof pageNum === 'number' ? (
+          <a 
+            href={getPageUrl(pageNum)}
+            class={`pagination-link ${page.currentPage === pageNum ? 'active' : ''}`}
+            aria-label={`ページ ${pageNum}${page.currentPage === pageNum ? '(現在のページ)' : ''}`}
+            aria-current={page.currentPage === pageNum ? 'page' : undefined}
+          >
+            {pageNum}
+          </a>
+        ) : (
+          <span class="pagination-ellipsis">...</span>
+        )}
+      </li>
+    ))}
+    
+    <!-- 次のページボタン -->
+    <li class="pagination-item">
+      {page.url.next ? (
+        <a 
+          href={page.url.next} 
+          class="pagination-link" 
+          aria-label="次のページ"
+        >
+          <span class="pagination-text">次へ</span>
+          <span class="pagination-arrow">→</span>
+        </a>
+      ) : (
+        <span class="pagination-link disabled">
+          <span class="pagination-text">次へ</span>
+          <span class="pagination-arrow">→</span>
+        </span>
+      )}
+    </li>
+  </ul>
 </nav>
 
 <style>
-    .pagination-container {
-        display: flex;
-        justify-content: center;
-        gap: 10px;
-        margin: 2rem 0;
+  .pagination {
+    margin: var(--spacing-xl) 0;
+  }
+  
+  .pagination-list {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    list-style: none;
+    padding: 0;
+    gap: var(--spacing-sm);
+  }
+  
+  .pagination-item {
+    margin: 0;
+  }
+  
+  .pagination-link {
+    display: flex;
+    align-items: center;
+    padding: var(--spacing-sm) var(--spacing-md);
+    border-radius: var(--border-radius-md);
+    border: 1px solid var(--color-border);
+    background-color: var(--color-bg-card);
+    color: var(--color-text);
+    text-decoration: none;
+    transition: all var(--transition-fast);
+    font-size: var(--font-size-sm);
+  }
+  
+  .pagination-link:hover:not(.disabled) {
+    background-color: var(--color-secondary-light);
+    color: var(--color-text-inverse);
+  }
+  
+  .pagination-link.active {
+    background-color: var(--color-primary);
+    color: var(--color-text-inverse);
+    border-color: var(--color-primary);
+  }
+  
+  .pagination-link.disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+  
+  .pagination-arrow {
+    font-size: 1.2em;
+    line-height: 1;
+  }
+  
+  .pagination-text {
+    display: none;
+  }
+  
+  .pagination-ellipsis {
+    display: inline-block;
+    padding: var(--spacing-sm) var(--spacing-md);
+    color: var(--color-text-light);
+  }
+  
+  /* タブレット以上 */
+  @media (min-width: 768px) {
+    .pagination-text {
+      display: inline;
+      margin: 0 var(--spacing-xs);
     }
-    .pagination-list {
-        display: inline-flex;
-        list-style: none;
-        padding: 0;
-        margin: 0;
-    }
-    .pagination-link {
-        padding: 0.5rem 1rem;
-        text-decoration: none;
-        color: #333;
-        border-radius: 0.25rem;
-        transition: background-color 0.3s;
-    }
-    .pagination-link:hover {
-        background-color: #e2e2e2;
-    }
-    .pagination-link.active {
-        background-color: #d44b3f;
-        color: #fff;
-    }
-    .pagination-link.disabled {
-        pointer-events: none;
-        color: #999;
-    }
+  }
 </style>

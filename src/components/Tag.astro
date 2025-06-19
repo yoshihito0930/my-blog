@@ -2,35 +2,43 @@
 interface Props {
   name: string;
   href: string;
-  focused: boolean | undefined;
+  focused?: boolean;
 }
-const { name, href, focused } = Astro.props;
+
+const { name, href, focused = false } = Astro.props;
 ---
 
-<a class={focused ? "focus" : "nonFocus"} href={href}>{name}</a>
+<a href={href} class={`tag ${focused ? 'focused' : ''}`}>
+  <span class="tag-name">{name}</span>
+</a>
 
 <style>
-  a {
-    display: inline-block;
-    padding: 1px 2px;
-    border-radius: 50px;
+  .tag {
+    display: inline-flex;
+    align-items: center;
+    padding: var(--spacing-xs) var(--spacing-sm);
+    background-color: var(--color-bg);
+    border: 1px solid var(--color-border);
+    border-radius: var(--border-radius-sm);
+    font-size: var(--font-size-xs);
+    color: var(--color-text);
     text-decoration: none;
-    transition: background-color 0.3s, color 0.3s;
+    transition: all var(--transition-fast);
   }
-  a:link, a:visited {
-    text-decoration: none; /* Remove underline */
-    color: #423e3e;
+  
+  .tag:hover {
+    background-color: var(--color-primary-light);
+    color: var(--color-text-inverse);
+    border-color: var(--color-primary);
   }
-  .focus {
-    background-color: #474747;
-    color: #fff;
+  
+  .tag.focused {
+    background-color: var(--color-primary);
+    color: var(--color-text-inverse);
+    border-color: var(--color-primary);
   }
-  .nonFocus {
-    background-color: #d1d1d1;
-    color: #423e3e;
-  }
-  a:hover {
-    background-color: #a0a0a0;
-    color: #423e3e;
+  
+  .tag-name {
+    font-weight: 500;
   }
 </style>

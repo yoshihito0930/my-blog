@@ -26,42 +26,76 @@ const { page } = Astro.props;
 const posts = page.data;
 const tags = [...new Set(allPosts.map((post) => post.data.tags).flat())];
 
-const urlPrefix = `/posts/page`;
+// URLプレフィックスを修正して、1ページ目は/postsにリダイレクト
+const urlPrefix = `/posts`;
 ---
 
-<BaseLayout title={BLOG_TITLE}>
-  <div class="container">
-    <div class="blog-container">
-      <Pagination page={page} urlPrefix={urlPrefix} />
-      <PostList posts={posts} />
-      <Pagination page={page} urlPrefix={urlPrefix} />
-    </div>
-    <aside class="sidebar">
-      <div class="categories">
-        <h3>Tags</h3>
-        <ul>
-          {tags.map(tag => (
-            <Tag name={tag} href={`/tags/${tag}`} focused={false} />
-          ))}
-        </ul>
+<BaseLayout title={`${BLOG_TITLE} - ページ${page.currentPage}`}>
+  <div class="page-container">
+    <!-- ブログタイトルを表示 -->
+    <h1 class="page-title">{BLOG_TITLE}</h1>
+    
+    <div class="posts-layout">
+      <!-- メインコンテンツ -->
+      <div class="main-content">
+        <PostList posts={posts} />
+        <Pagination page={page} urlPrefix={urlPrefix} />
       </div>
-    </aside>
+
+      <!-- tagバー -->
+      <div class="tagbar">
+        <div class="tag-section">
+          <h2 class="tag-title">Tag</h2>
+          <div class="tags-container">
+            {tags.map(tag => (
+              <Tag name={tag} href={`/tags/${tag}`} focused={false} />
+            ))}
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
 </BaseLayout>
 
 <style>
-  .container {
+  .page-container {
+    width: 100%;
+    max-width: 1200px;
     margin: 0 auto;
-    padding-right: 20px;
-    padding-left: 20px;
   }
-  .blog-container {
+  
+  .page-title {
+    margin-bottom: var(--spacing-lg);
+    text-align: center;
+  }
+  
+  /* モバイルではメインコンテンツとサイドバーを縦に配置 */
+  .posts-layout {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: var(--spacing-xl);
+  }
+  
+  .main-content {
+    width: 100%;
+  }
+  
+  .tag-title {
+    font-size: var(--font-size-lg);
+    margin-bottom: var(--spacing-md);
+  }
+  
+  .tag-section {
+    background-color: var(--color-bg-card);
+    padding: var(--spacing-md);
+    border-radius: var(--border-radius-md);
+    box-shadow: var(--shadow-sm);
+  }
+  
+  .tags-container {
     display: flex;
-    align-items: stretch;
+    flex-wrap: wrap;
+    gap: var(--spacing-xs);
   }
-  .ul {
-    list-style: none;
-    padding: 0;
-    margin: 0;
-  }
+  
 </style>
