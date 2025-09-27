@@ -4,7 +4,7 @@ tags: []
 image: "/assets/blog/20250924_GenAIGameDay_LT.png"
 publishedAt: 2025-09-24
 modifiedAt:
-draft:
+draft: false
 ---
 # Claude Codeで開発する予約管理アプリケーション - 個人開発で学んだ生成AI活用の仕方と注意点
 
