@@ -1,6 +1,6 @@
 ---
 title: "生成AIを活用した個人開発事例"
-tags: []
+tags: ['aws','LT', 'GenerativeAI']
 image: "/assets/blog/20250924_GenAIGameDay_LT.png"
 publishedAt: 2025-09-24
 modifiedAt:
