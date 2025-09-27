@@ -1,10 +1,10 @@
 ---
 title: "生成AIを活用した個人開発事例"
 tags: []
-image: "/assets/blog/20250417_vpcendpoint_sg.png"
+image: "/assets/blog/20250924_GenAIGameDay_LT.png"
 publishedAt: 2025-09-24
 modifiedAt:
-draft: true
+draft:
 ---
 # Claude Codeで開発する予約管理アプリケーション - 個人開発で学んだ生成AI活用の仕方と注意点
 
