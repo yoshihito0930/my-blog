@@ -16,22 +16,68 @@ const { entry } = Astro.props;
 const { Content } = await entry.render();
 ---
 <BaseLayout>
-    <p>
-        {new Date(entry.data.publishedAt).toLocaleDateString('ja-JP', { year: 'numeric', month: '2-digit', day: '2-digit' })}
-        {entry.data.modifiedAt && `(${new Date(entry.data.modifiedAt).toLocaleDateString('ja-JP', { year: 'numeric', month: '2-digit', day: '2-digit' })})`}
-    </p>
-    <div class="title">{entry.data.title}</div>
-    <Content class="content" />
+    <article class="article-wrapper">
+        <div class="article-meta">
+            <time datetime={entry.data.publishedAt.toString()}>
+                {new Date(entry.data.publishedAt).toLocaleDateString('ja-JP', { year: 'numeric', month: '2-digit', day: '2-digit' })}
+            </time>
+            {entry.data.modifiedAt && (
+                <span class="modified-date">
+                    (更新: {new Date(entry.data.modifiedAt).toLocaleDateString('ja-JP', { year: 'numeric', month: '2-digit', day: '2-digit' })})
+                </span>
+            )}
+        </div>
+        <h1 class="article-title">{entry.data.title}</h1>
+        <div class="article-content">
+            <Content />
+        </div>
+    </article>
 </BaseLayout>
 
 <style>
-    .title {
-        font-size: 1.5em;
-        font-weight: bold;
-        margin: 1em 0;
-        border-bottom: 1px solid #a3a3a3;
+    .article-wrapper {
+        max-width: 800px;
+        margin: 0 auto;
+        padding: var(--spacing-xl) var(--spacing-md);
     }
-    .content {
-        margin-left: 20%;
+
+    .article-meta {
+        font-size: var(--font-size-sm);
+        color: var(--color-text-light);
+        margin-bottom: var(--spacing-md);
+    }
+
+    .modified-date {
+        margin-left: var(--spacing-xs);
+    }
+
+    .article-title {
+        font-size: var(--font-size-3xl);
+        font-weight: bold;
+        margin: 0 0 var(--spacing-xl) 0;
+        padding-bottom: var(--spacing-md);
+        border-bottom: 2px solid var(--color-border);
+        line-height: var(--line-height-tight);
+    }
+
+    .article-content {
+        font-size: 18px;
+        line-height: 1.75;
+        color: var(--color-text);
+    }
+
+    /* レスポンシブ対応 */
+    @media (max-width: 768px) {
+        .article-wrapper {
+            padding: var(--spacing-lg) var(--spacing-md);
+        }
+
+        .article-title {
+            font-size: var(--font-size-2xl);
+        }
+
+        .article-content {
+            font-size: 16px;
+        }
     }
 </style>
