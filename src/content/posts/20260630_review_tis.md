@@ -1,5 +1,5 @@
 ---
-title: "生成AIを活用した個人開発事例"
+title: "TISでの6年間を振り返る"
 tags: ['review']
 image: "/assets/blog/20260630_review_tis.png"
 publishedAt: 2026-06-30
