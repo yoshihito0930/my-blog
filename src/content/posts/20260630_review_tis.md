@@ -1,6 +1,6 @@
 ---
 title: "生成AIを活用した個人開発事例"
-tags: ['aws','LT', 'GenerativeAI']
+tags: ['review']
 image: "/assets/blog/20260630_review_tis.png"
 publishedAt: 2026-06-30
 modifiedAt:
